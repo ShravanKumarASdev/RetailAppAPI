@@ -19,6 +19,17 @@ app.route('/Users')
     );
   });
 
+  app.route('/Products')
+  .get(function(req, res, next) {
+    connection.query(
+      "SELECT * FROM `Products`LIMIT 100",
+      function(error, results, fields) {
+        if (error) throw error;
+        res.json(results);
+      }
+    );
+  });
+
   app.post('/Users/Authenticate',function(req, res) {
     let userName = req.body.userNm;
     let password = req.body.userPwd;
