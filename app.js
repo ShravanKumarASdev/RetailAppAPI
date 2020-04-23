@@ -30,9 +30,17 @@ app.route('/Users')
     );
   });
 
-  app.route('/Users/Insert')
-  .get(function(req, res, next) {
-  connection.query('INSERT INTO Users SET ?', {UserName:'New User40', Password:'TempPwd', IsVendor:0,EmailAddress:'test@gmail.com',MobileNumber:1234567890},
+  // app.route('/Users/Insert')
+  // .get(function(req, res, next) {
+
+    app.post('/Users/Insert',function(req, res) {
+    let UserName = req.body.userNm;
+    let Password = req.body.userPwd;
+    let EmailAddress=req.body.emailAddrss;
+    let MobileNumber=req.body.mobNum;
+    let IsVendor=0;
+  //connection.query('INSERT INTO Users SET ?', [UserName,Password,IsVendor,EmailAddress,MobileNumber],
+  connection.query('INSERT INTO Users SET ?',{UserName:UserName,Password:Password,IsVendor:IsVendor,EmailAddress:EmailAddress,MobileNumber:MobileNumber},
    function (error, results, fields) {
     if (error) throw error;
     res.json(results.insertId);
