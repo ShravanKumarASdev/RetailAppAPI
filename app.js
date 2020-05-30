@@ -19,12 +19,25 @@ app.route('/Users')
     );
   });
 
-  app.route('/Products')
+  app.route('/ProductsByCategory')
   .get(function(req, res, next) {
+    let categories = req.query.categories;
     connection.query(
-      "SELECT * FROM `Products`LIMIT 100",
+      "CALL RetrieveProductsByCategory("+categories+")",
       function(error, results, fields) {
         if (error) throw error;
+        res.json(results[0]);
+      }
+    );
+  });
+
+  app.route('/Products/Categories')
+  .get(function(req, res, next) {
+    connection.query(
+      "select distinct CategoryName as Category from Categories",
+      function(error, results, fields) {
+        if (error) throw error;
+        console.log(results);
         res.json(results);
       }
     );
